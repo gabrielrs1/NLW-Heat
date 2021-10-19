@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "skipLibCheck": true,
+
+    // onde ficam os tipos da aplicacao, tanto os padrão e customizaveis
+    "typeRoots": ["./src/@types", "node_modules/@types"]
+  }
+}
