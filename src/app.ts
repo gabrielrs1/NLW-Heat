@@ -35,4 +35,18 @@ app.get("/signin/callback", (request, response) => {
     return response.json(code);
 })
 
+// Google
+app.get("/auth/google", (request, response) => {
+    response.redirect(
+        `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.profile&access_type=offline&response_type=code&redirect_uri=http://localhost:4000/google/callback&client_id=${process.env.GOOGLE_CLIENT_ID}`
+    );
+});
+
+app.get("/google/callback", (request, response) => {
+    const { code } = request.query;
+
+    return response.json(code);
+})
+
+
 export { serverHttp, io }
