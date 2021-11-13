@@ -4,5 +4,5 @@ CREATE TABLE "messages" (
     "text" TEXT NOT NULL,
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "user_id" TEXT NOT NULL,
-    CONSTRAINT "messages_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "google_users" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "messages_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users_oauth" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );

@@ -7,49 +7,26 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// Github
-// model User {
-//   id          String @id @default(uuid())
-//   name        String
-//   github_id   Int
-//   avatar_url  String
-//   login       String
+// Github e Google
+model User {
+  id              String @id @default(uuid())
+  name            String
+  user_oauth_id   String
+  avatar_url      String
 
-//   // nome da tabela
-//   @@map("users")
-//   messages Message[]
-// }
-
-
-// Google
-model Google {
-  id          String @id @default(uuid())
-  name        String
-  google_id   String
-  picture     String
-
-  @@map("google_users")
-  google_messages Message[]
+  // nome da tabela
+  @@map("users_oauth")
+  
+  messages Message[]
 }
 
 model Message {
-  id          String @id @default(uuid())
-  text        String
-  created_at  DateTime @default(now())
+  id              String @id @default(uuid())
+  text            String
+  created_at      DateTime @default(now())
 
-  user Google @relation(fields: [user_id], references: [id])
+  user User @relation(fields: [user_id], references: [id])
 
   @@map("messages")
-  user_id String
+  user_id         String
 }
-
-// model GoogleMessages {
-//   id              String @id @default(uuid())
-//   text            String
-//   created_at      DateTime @default(now())
-
-//   googleuser Google @relation(fields: [google_user_id], references: [id])
-
-//   @@map("google_messages")
-//   google_user_id   String
-// }

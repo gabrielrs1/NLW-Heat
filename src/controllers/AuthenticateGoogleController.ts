@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { GoogleUserAuthenticateService } from "../services/GoogleUserAuthenticateService";
 
-class AuthenticateUserController {
+class AuthenticateGoogleController {
     async handle(request: Request, response: Response) {
         const { code } = request.body;
         
@@ -12,11 +12,10 @@ class AuthenticateUserController {
 
             return response.json(result);
         } catch (error) {
-            console.log("erro", error)
-            return response.json({ error: error });
+            return response.json({ error: error.message });
         }
 
     }
 }
 
-export { AuthenticateUserController }
+export { AuthenticateGoogleController }

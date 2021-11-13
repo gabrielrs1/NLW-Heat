@@ -47,22 +47,21 @@ class GithubUserAuthenticateService {
             }
         });
 
-        const { login, id, avatar_url, name } = response.data
+        const { login, id, avatar_url } = response.data
 
         // busca se existe o usuario onde tenha github_id igual ao id
         let user = await prismaClient.user.findFirst({
             where: {
-                github_id: id
+                user_oauth_id: String(id)
             }
         });
 
         if(!user) {
             user = await prismaClient.user.create({
                 data: {
-                    github_id: id,
-                    login,
+                    user_oauth_id: String(id),
                     avatar_url,
-                    name
+                    name: login
                 }
             });
         }

@@ -25,11 +25,12 @@ io.on("connection", socket => {
 app.use(express.json());
 app.use(router);
 
-app.get("/github", (request, response) => {
+// Github
+app.get("/auth/github", (request, response) => {
     response.redirect(`https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}`);
 });
 
-app.get("/signin/callback", (request, response) => {
+app.get("/github/callback", (request, response) => {
     const { code } = request.query;
 
     return response.json(code);
@@ -38,7 +39,7 @@ app.get("/signin/callback", (request, response) => {
 // Google
 app.get("/auth/google", (request, response) => {
     response.redirect(
-        `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.profile&access_type=offline&response_type=code&redirect_uri=http://localhost:4000/google/callback&client_id=${process.env.GOOGLE_CLIENT_ID}`
+        `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.profile&access_type=offline&response_type=code&redirect_uri=http://localhost:3000&client_id=${process.env.GOOGLE_CLIENT_ID}`
     );
 });
 

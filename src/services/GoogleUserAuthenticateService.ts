@@ -15,12 +15,14 @@ interface IUserResponseGoogle {
 
 class GoogleUserAuthenticateService {
     async execute(code: string) {
-        const { data: accessTokenResponse } = await axios.post<IAccessTokenResponse>("https://oauth2.googleapis.com/token", encode({
+        const url = "https://oauth2.googleapis.com/token";
+
+        const { data: accessTokenResponse } = await axios.post<IAccessTokenResponse>(url, encode({
             code: decodeURIComponent(code),
             client_id: process.env.GOOGLE_CLIENT_ID,
             client_secret: process.env.GOOGLE_CLIENT_SECRET,
             redirect_uri: "http://localhost:3000",
-            grant_type: "authorization_code",
+            grant_type: "authorization_code"
         }), {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -35,38 +37,38 @@ class GoogleUserAuthenticateService {
 
         const { id, name, picture } = response.data;
 
-        let gUser = await prismaClient.google.findFirst({
+        let user = await prismaClient.user.findFirst({
             where: {
-                google_id: String(id)
+                user_oauth_id: String(id)
             }
         })
 
-        if(!gUser) {
-            gUser = await prismaClient.google.create({
+        if(!user) {
+            user = await prismaClient.user.create({
                 data: {
                     name,
-                    google_id: String(id),
-                    picture
+                    user_oauth_id: String(id),
+                    avatar_url: picture
                 }
             })
         }
 
         const token = jwt.sign(
             {
-                googleuser: {
-                    id: gUser.id,
-                    name: gUser.name,
-                    picture: gUser.picture
+                googleUser: {
+                    id: user.id,
+                    name: user.name,
+                    picture: user.avatar_url
                 }
             },
             process.env.JWT_SECRET,
             {
-                subject: gUser.id,
+                subject: user.id,
                 expiresIn: "1d"
             }
         );
 
-        return { token, gUser };
+        return { token, user };
     }
 }
 

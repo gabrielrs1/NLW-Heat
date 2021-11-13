@@ -14,17 +14,17 @@ class CreateMessageService {
             }
         });
 
-        const infoWS = {
+        const info = {
             text: message.text,
             user_id: message.id,
             created_at: message.created_at,
             user: {
                 name: message.user.name,
-                picture: message.user.picture
+                picture: message.user.avatar_url
             }
         }
 
-        io.emit("new_message", infoWS);
+        io.emit("new_message", info);
 
         return message;
     }

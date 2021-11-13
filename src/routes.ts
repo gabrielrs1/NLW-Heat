@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { AuthenticateUserController } from "./controllers/AuthenticateUserController";
+import { AuthenticateGithubController } from "./controllers/AuthenticateGithubController";
+import { AuthenticateGoogleController } from "./controllers/AuthenticateGoogleController";
 import { CreateMessageController } from "./controllers/CreateMessageController";
 import { Get3LastMessagesController } from "./controllers/Get3LastMessagesController";
 import { ProfileUserController } from "./controllers/ProfileUserController";
@@ -7,7 +8,8 @@ import { ensureAuthenticated } from "./middleware/ensureAuthenticated";
 
 const router = Router();
 
-router.post("/authenticate", new AuthenticateUserController().handle);
+router.post("/authenticate/github", new AuthenticateGithubController().handle);
+router.post("/authenticate/google", new AuthenticateGoogleController().handle);
 
 router.post("/messages",
     ensureAuthenticated,
