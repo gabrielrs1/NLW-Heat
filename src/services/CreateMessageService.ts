@@ -20,7 +20,7 @@ class CreateMessageService {
             created_at: message.created_at,
             user: {
                 name: message.user.name,
-                picture: message.user.avatar_url
+                avatar_url: message.user.avatar_url
             }
         }
 

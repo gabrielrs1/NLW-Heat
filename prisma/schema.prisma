@@ -14,7 +14,7 @@ model User {
   user_oauth_id   String
   avatar_url      String
 
-  // nome da tabela
+  // table name
   @@map("users_oauth")
   
   messages Message[]
@@ -27,6 +27,7 @@ model Message {
 
   user User @relation(fields: [user_id], references: [id])
 
+  // table name
   @@map("messages")
   user_id         String
 }
